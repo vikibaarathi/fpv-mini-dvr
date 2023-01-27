@@ -14,7 +14,7 @@ file_path = "heat1.mp4"
 fps = 30
 
 fourcc = VideoWriter_fourcc('m', 'p', '4', 'v')
-video = VideoWriter(file_path,fourcc,fps,(width,height))
+writer = VideoWriter(file_path,fourcc,fps,(width,height))
 
 
 
@@ -24,11 +24,16 @@ while(True):
     # Capture the video frame
     # by frame
     ret, frame = vid.read()
+    font = cv2.FONT_HERSHEY_SIMPLEX
   
+    # Use putText() method for
+    # inserting text on video
+    cv2.putText(frame, 'TEXT ON VIDEO', (50, 50), font, 1, (0, 255, 255), 2, cv2.LINE_4)
     # Display the resulting frame
     cv2.imshow('frame', frame)
+    
       
-    video.write(frame)  
+    writer.write(frame)  
     # the 'q' button is set as the
     # quitting button you may use any
     # desired button of your choice
@@ -37,5 +42,6 @@ while(True):
   
 # After the loop release the cap object
 vid.release()
+writer.release()
 # Destroy all the windows
 cv2.destroyAllWindows()
