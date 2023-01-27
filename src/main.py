@@ -1,10 +1,22 @@
 
 # import the opencv library
 import cv2
+from cv2 import VideoWriter
+from cv2 import VideoWriter_fourcc
   
   
 # define a video capture object
 vid = cv2.VideoCapture(0)
+
+width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
+height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
+file_path = "heat1.mp4"
+fps = 30
+
+fourcc = VideoWriter_fourcc('m', 'p', '4', 'v')
+video = VideoWriter(file_path,fourcc,fps,(width,height))
+
+
 
   
 while(True):
@@ -16,6 +28,7 @@ while(True):
     # Display the resulting frame
     cv2.imshow('frame', frame)
       
+    video.write(frame)  
     # the 'q' button is set as the
     # quitting button you may use any
     # desired button of your choice
