@@ -1,13 +1,11 @@
 
 # import the opencv library
 import cv2
-import TimeCalculator as tm
   
   
 # define a video capture object
 vid = cv2.VideoCapture(0)
-tc =  tm.TimeCalculator()
-tc.startTimer()
+
   
 while(True):
       
