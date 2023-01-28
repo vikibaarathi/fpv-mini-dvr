@@ -1,12 +1,16 @@
 
 # import the opencv library
 import cv2
+import json
 from cv2 import VideoWriter
 from cv2 import VideoWriter_fourcc
   
+config_json = open("config.json")
+config =  json.load(config_json)
+vid_source = config["source"]
   
 # define a video capture object
-vid = cv2.VideoCapture(0)
+vid = cv2.VideoCapture(vid_source)
 
 width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
 height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -44,4 +48,5 @@ while(True):
 vid.release()
 writer.release()
 # Destroy all the windows
+config.close()
 cv2.destroyAllWindows()
