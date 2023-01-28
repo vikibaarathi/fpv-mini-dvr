@@ -48,4 +48,5 @@ while(True):
 vid.release()
 writer.release()
 # Destroy all the windows
+config.close()
 cv2.destroyAllWindows()
