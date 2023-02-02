@@ -4,6 +4,7 @@ import cv2
 import json
 from cv2 import VideoWriter
 from cv2 import VideoWriter_fourcc
+from RHManager import RHManager
   
 config_json = open("config.json")
 config =  json.load(config_json)
@@ -20,6 +21,10 @@ fps = 30
 fourcc = VideoWriter_fourcc('m', 'p', '4', 'v')
 writer = VideoWriter(file_path,fourcc,fps,(width,height))
 
+#Create an instance of the Rotor Hazard Manager
+rh = RHManager()
+currentHeat = rh.getCurrentHeat()
+print(currentHeat)
 
 
   
@@ -32,7 +37,7 @@ while(True):
   
     # Use putText() method for
     # inserting text on video
-    cv2.putText(frame, 'TEXT ON VIDEO', (50, 50), font, 1, (0, 255, 255), 2, cv2.LINE_4)
+    cv2.putText(frame, currentHeat, (50, 50), font, 1, (0, 255, 255), 2, cv2.LINE_4)
     # Display the resulting frame
     cv2.imshow('frame', frame)
     

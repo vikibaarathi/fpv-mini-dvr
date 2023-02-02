@@ -1,3 +1,4 @@
 {
-    "source": 0
+    "source": 0,
+    "rotorHazardEndpoint": "http://laptimer.local:5000"
 }
