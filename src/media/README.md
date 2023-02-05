@@ -1,0 +1,1 @@
+This is where media is stored. MP4 files are not checked into the Repo
