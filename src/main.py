@@ -15,7 +15,7 @@ vid = cv2.VideoCapture(vid_source)
 
 width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
 height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
-file_path = "heat1.mp4"
+file_path = "media/heat1.mp4"
 fps = 30
 
 fourcc = VideoWriter_fourcc('m', 'p', '4', 'v')
@@ -23,8 +23,8 @@ writer = VideoWriter(file_path,fourcc,fps,(width,height))
 
 #Create an instance of the Rotor Hazard Manager
 rh = RHManager()
-currentHeat = rh.getCurrentHeat()
-print(currentHeat)
+# currentHeat = rh.getCurrentHeat()
+# print(currentHeat)
 
 
   
@@ -37,7 +37,7 @@ while(True):
   
     # Use putText() method for
     # inserting text on video
-    cv2.putText(frame, currentHeat, (50, 50), font, 1, (0, 255, 255), 2, cv2.LINE_4)
+    cv2.putText(frame, "Hello", (50, 50), font, 1, (0, 255, 255), 2, cv2.LINE_4)
     # Display the resulting frame
     cv2.imshow('frame', frame)
     
