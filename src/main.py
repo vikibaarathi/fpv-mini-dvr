@@ -40,7 +40,7 @@ while(True):
     #Fire the API every 30 frames
     if counter > 30:
         counter = 0
-        status = rh.getRaceState(rh)
+        status = rh.getLiveRaceState()
 
         #Log and save if status changed
         if DISPLAY_STATUS != status:

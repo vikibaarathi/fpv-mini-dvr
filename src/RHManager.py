@@ -6,12 +6,17 @@ class RHManager:
     currentHeat = 0
     raceStatus = 0
 
-    @staticmethod    
-    def getRaceStatus():
+    @staticmethod
+    def getBaseUrl():
         config_json = open("config.json")
         config =  json.load(config_json)
+        baseUrl = config.get('rotorHazardEndpoint')
+        return baseUrl
+
+
+    def requestRHStatus(self):       
         try:
-            baseUrl = config.get('rotorHazardEndpoint')
+            baseUrl = self.getBaseUrl()
             response = requests.get(baseUrl + "/api/status")
             responseJson = response.json()
             status = responseJson['status']['state']
@@ -39,10 +44,9 @@ class RHManager:
             return False
 
 
-    @staticmethod
-    def getRaceState(self):
+    def getLiveRaceState(self):
         try:
-            state = self.getRaceStatus()
+            state = self.requestRHStatus()
             raceStatus = state['race_status']
             
             match raceStatus:
@@ -58,11 +62,5 @@ class RHManager:
                     return "RH Malfunction"
 
         except:
-            return "RH Disabled"
             
-
-    ##Race status Conditions
-    # 0 - Race Standby
-    # 3 - Staging
-    # 1 - Started
-    # 2 - Race STopped
+            return "RH Disabled"
