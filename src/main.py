@@ -23,8 +23,8 @@ writer = VideoWriter(file_path,fourcc,fps,(width,height))
 
 #Create an instance of the Rotor Hazard Manager
 rh = RHManager()
-# currentHeat = rh.getCurrentHeat()
-# print(currentHeat)
+status = rh.getRaceStatus()
+current = rh.getRaceCurrent()
 
 
   
