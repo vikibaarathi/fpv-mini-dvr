@@ -67,6 +67,5 @@ while(True):
 # After the loop release the cap object
 vid.release()
 writer.release()
-# Destroy all the windows
-config.close()
+
 cv2.destroyAllWindows()
