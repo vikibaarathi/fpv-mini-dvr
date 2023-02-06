@@ -9,6 +9,7 @@ from RHManager import RHManager
 config_json = open("config.json")
 config =  json.load(config_json)
 vid_source = config["source"]
+DISPLAY_STATUS = ""
   
 # define a video capture object
 vid = cv2.VideoCapture(vid_source)
@@ -16,18 +17,16 @@ vid = cv2.VideoCapture(vid_source)
 width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
 height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
 file_path = "media/heat1.mp4"
-fps = 30
+fps = 15
 
 fourcc = VideoWriter_fourcc('m', 'p', '4', 'v')
 writer = VideoWriter(file_path,fourcc,fps,(width,height))
 
 #Create an instance of the Rotor Hazard Manager
 rh = RHManager()
-status = rh.getRaceStatus()
-current = rh.getRaceCurrent()
 
-
-  
+counter = 0
+ 
 while(True):
       
     # Capture the video frame
@@ -37,12 +36,28 @@ while(True):
   
     # Use putText() method for
     # inserting text on video
-    cv2.putText(frame, "Hello", (50, 50), font, 1, (0, 255, 255), 2, cv2.LINE_4)
+
+    #Fire the API every 30 frames
+    if counter > 30:
+        counter = 0
+        status = rh.getRaceState(rh)
+
+        #Log and save if status changed
+        if DISPLAY_STATUS != status:
+            DISPLAY_STATUS = status
+            print(DISPLAY_STATUS)
+
+
+    cv2.putText(frame, DISPLAY_STATUS, (50, 50), font, 1, (3, 3, 3), 2, cv2.LINE_4)
+    counter = counter + 1
     # Display the resulting frame
     cv2.imshow('frame', frame)
     
-      
-    writer.write(frame)  
+    #Record and stop only when race is running
+    if DISPLAY_STATUS == "Get Ready" or DISPLAY_STATUS == "Race Started":    
+        writer.write(frame)  
+
+
     # the 'q' button is set as the
     # quitting button you may use any
     # desired button of your choice

@@ -6,9 +6,7 @@ class RHManager:
     currentHeat = 0
     raceStatus = 0
 
-        
-
-    @staticmethod
+    @staticmethod    
     def getRaceStatus():
         config_json = open("config.json")
         config =  json.load(config_json)
@@ -16,14 +14,12 @@ class RHManager:
             baseUrl = config.get('rotorHazardEndpoint')
             response = requests.get(baseUrl + "/api/status")
             responseJson = response.json()
-            status = responseJson.get('status')
-            print(status)
-            print("**********")
-            return True
+            status = responseJson['status']['state']
+
+            return status
         except requests.exceptions.RequestException as e:  # This is the correct syntax
             print(e)
-            #raise SystemExit(e)
-            return False
+            return e
         
 
     @staticmethod
@@ -41,3 +37,32 @@ class RHManager:
             print(e)
             #raise SystemExit(e)
             return False
+
+
+    @staticmethod
+    def getRaceState(self):
+        try:
+            state = self.getRaceStatus()
+            raceStatus = state['race_status']
+            
+            match raceStatus:
+                case 0:
+                    return "Racer Standby"
+                case 1:
+                    return "Race Started"
+                case 2:
+                    return "Race Stopped"
+                case 3:
+                    return "Get Ready"
+                case _:
+                    return "RH Malfunction"
+
+        except:
+            return "RH Disabled"
+            
+
+    ##Race status Conditions
+    # 0 - Race Standby
+    # 3 - Staging
+    # 1 - Started
+    # 2 - Race STopped
